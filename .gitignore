@@ -1,0 +1,10 @@
+backend/data/working_graph.ttl
+backend/test-results.txt
+**/__pycache__/
+**/.pytest_cache/
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+.venv/
+venv/
+*.py[cod]

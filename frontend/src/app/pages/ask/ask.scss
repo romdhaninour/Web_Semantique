@@ -1,0 +1,193 @@
+.page-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.3rem;
+  color: #43866b;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.intro {
+  color: #64748b;
+}
+
+.chat-box, .result-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e3e3e3;
+  padding: 1rem;
+}
+
+.examples-title {
+  margin: 0.9rem 0 0.45rem;
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.example-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.example-chip {
+  padding: 0.4rem 0.6rem;
+  background: #edf5ef;
+  color: #1b4332;
+  font-size: 0.78rem;
+}
+
+.example-chip.mutation-chip {
+  background: #fff1d1;
+  color: #805300;
+}
+
+textarea {
+  width: 100%;
+  border: 1px solid #d6d6d6;
+  border-radius: 10px;
+  padding: 0.8rem;
+  font: inherit;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+button {
+  background: #1b4332;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.voice-button {
+  background: #e7f1eb;
+  color: #1b4332;
+}
+
+.voice-button.recording {
+  background: #a83232;
+  color: white;
+}
+
+.status {
+  margin: 0;
+  color: #64748b;
+}
+
+.error {
+  margin: 0;
+  color: #a83232;
+}
+
+.mutation-notice,
+.mutation-success {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+}
+
+.mutation-notice {
+  background: #fff7e6;
+  color: #805300;
+}
+
+.mutation-success {
+  background: #e7f8ef;
+  color: #1b4332;
+}
+
+.cancel-button {
+  background: #64748b;
+}
+
+.confirm-button {
+  background: #a83232;
+}
+
+.meta {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.analysis {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  color: #475569;
+  font-size: 0.88rem;
+}
+
+.sparql-output {
+  margin: 0.8rem 0 1rem;
+  color: #1b4332;
+}
+
+.sparql-output summary {
+  width: fit-content;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.sparql-output pre {
+  overflow: auto;
+  padding: 0.9rem;
+  border-radius: 8px;
+  background: #10261f;
+  color: #e2f1e7;
+  font: 0.82rem/1.6 Consolas, 'Courier New', monospace;
+  white-space: pre-wrap;
+}
+
+.badge {
+  background: #e7f8ef;
+  color: #1b4332;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.badge.muted {
+  background: #edf3f8;
+  color: #3a5a78;
+}
+
+.badge.accent {
+  background: #fff1d1;
+  color: #a06600;
+}
+
+.table-wrap {
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid #edf0f2;
+  text-align: left;
+}

@@ -1,0 +1,113 @@
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f7f5;
+  color: #0d1b2a;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex: 0 0 250px;
+  flex-direction: column;
+  width: 250px;
+  height: 100vh;
+  background: #10261f;
+  color: white;
+  padding: 1.5rem 1rem;
+}
+
+.brand {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.brand-caption {
+  margin: 0.25rem 0 1.75rem;
+  color: #b9cdc3;
+  font-size: 0.8rem;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+nav a {
+  color: #d5e2dc;
+  text-decoration: none;
+  padding: 0.72rem 0.8rem;
+  border-radius: 9px;
+  font-size: 0.9rem;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+nav a:hover, nav a.active {
+  background: rgba(115, 197, 153, 0.15);
+  color: #fff;
+}
+
+nav a.active {
+  box-shadow: inset 3px 0 #62bd89;
+}
+
+.sidebar-footer {
+  margin: auto 0 0;
+  padding: 0.8rem 0.4rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: #b9cdc3;
+  font-size: 0.75rem;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 2.25rem);
+}
+
+h1 {
+  margin: 0 0 1rem 0;
+  font-size: clamp(1.7rem, 3vw, 2.25rem);
+  letter-spacing: -0.04em;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f7f5;
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    display: block;
+  }
+
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .brand-caption, .sidebar-footer {
+    display: none;
+  }
+
+  nav {
+    flex-direction: row;
+    overflow-x: auto;
+    margin-top: 0.75rem;
+  }
+
+  nav a {
+    flex: 0 0 auto;
+  }
+
+}

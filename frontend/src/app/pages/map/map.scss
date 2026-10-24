@@ -1,0 +1,141 @@
+.page-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  margin: 0 0 0.25rem;
+  color: #43866b;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+h1, h2 { margin: 0; }
+
+.subtitle, .hint, .status, .unlocated {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.status.error { color: #a83232; }
+
+.map-box {
+  overflow: auto;
+  border: 1px solid #dce7e1;
+  border-radius: 16px;
+  background:
+    linear-gradient(rgba(56, 105, 91, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 105, 91, 0.055) 1px, transparent 1px),
+    #f4f8f3;
+  background-size: 36px 36px;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  min-width: 650px;
+  max-height: 680px;
+  background:
+    radial-gradient(ellipse at 54% 35%, rgba(133, 187, 207, 0.15), transparent 54%);
+}
+
+.tunisia {
+  fill: #dce8d9;
+  stroke: #879f8c;
+  stroke-width: 3.5;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 5px 5px rgba(47, 79, 61, 0.16));
+}
+
+.island {
+  fill: #dce8d9;
+  stroke: #879f8c;
+  stroke-width: 2.5;
+}
+
+.sea-label,
+.island-label {
+  fill: #668b9a;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.island-label {
+  font-size: 11px;
+}
+
+.map-marker {
+  cursor: pointer;
+  outline: none;
+}
+
+.map-marker circle {
+  fill: #187150;
+  stroke: white;
+  stroke-width: 4;
+  filter: drop-shadow(0 2px 3px rgba(20, 60, 40, 0.25));
+  transition: r 120ms ease, fill 120ms ease;
+}
+
+.map-marker text {
+  fill: #173d30;
+  font-size: 12px;
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: #f4f8f3;
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.map-marker:hover circle, .map-marker.active circle {
+  fill: #d7841b;
+  r: 12px;
+}
+
+.detail-panel {
+  padding: 1rem;
+  border: 1px solid #dce7e1;
+  border-radius: 12px;
+  background: white;
+}
+
+.detail-panel h2 {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-bottom: 0.5rem;
+  color: #173d30;
+  font-size: 1.1rem;
+}
+
+.detail-panel h2 span, .resource-list small {
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.resource-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.4rem;
+}
+
+.resource-list div {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.65rem;
+  border-radius: 8px;
+  background: #f6f8f6;
+}
+
+.resource-list strong {
+  overflow-wrap: anywhere;
+  font-size: 0.85rem;
+}

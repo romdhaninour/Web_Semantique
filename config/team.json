@@ -1,0 +1,9 @@
+{
+  "team": [
+    { "name": "Module 1 - Ontologie & Données", "owner": "Étudiant 1", "criteria": ["Individuals /2", "Added value / reasoner UI"] },
+    { "name": "Module 2 - SPARQL", "owner": "Étudiant 2", "criteria": ["SPARQL queries /4"] },
+    { "name": "Module 3 - NLP/TALN", "owner": "Étudiant 3", "criteria": ["NLTK translator /4", "Speech input"] },
+    { "name": "Module 4 - Interfaces", "owner": "Étudiant 4", "criteria": ["Graphical interfaces /3", "Map"] },
+    { "name": "Module 5 - API & Intégration", "owner": "Étudiant 5", "criteria": ["FE/BE communication /3", "Scenario /2"] }
+  ]
+}
