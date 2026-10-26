@@ -3,31 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService, NlpAnswer } from '../../services/api.service';
 
-interface SpeechRecognitionResultLike {
-  0: { transcript: string };
-}
-
-interface SpeechRecognitionEventLike {
-  results: ArrayLike<SpeechRecognitionResultLike>;
-}
-
-interface SpeechRecognitionLike {
-  lang: string;
-  interimResults: boolean;
-  maxAlternatives: number;
-  onresult: ((event: SpeechRecognitionEventLike) => void) | null;
-  onerror: ((event: { error: string }) => void) | null;
-  onend: (() => void) | null;
-  start(): void;
-  stop(): void;
-}
-
-type SpeechRecognitionConstructor = new () => SpeechRecognitionLike;
-type SpeechWindow = Window & {
-  SpeechRecognition?: SpeechRecognitionConstructor;
-  webkitSpeechRecognition?: SpeechRecognitionConstructor;
-};
-
 @Component({
   selector: 'app-ask-page',
   standalone: true,
@@ -42,10 +17,6 @@ type SpeechWindow = Window & {
       <div class="chat-box">
         <textarea [(ngModel)]="question" rows="3" placeholder="Ex. Quelles sources produisent plus de 500 kW ?"></textarea>
         <div class="actions">
-          <button class="voice-button" type="button" *ngIf="speechAvailable" (click)="toggleVoiceInput()"
-            [class.recording]="listening" [disabled]="loading">
-            {{ listening ? 'Arrêter le micro' : 'Dicter une question' }}
-          </button>
           <button (click)="ask()" [disabled]="loading || !question.trim() || !!response?.requires_confirmation">Questionner</button>
         </div>
         <p class="examples-title">Exemples à essayer</p>
@@ -60,7 +31,6 @@ type SpeechWindow = Window & {
           <button type="button" class="example-chip mutation-chip" (click)="question = 'Lis la ressource Demo_Eolienne'">CRUD · Lire</button>
         </div>
       </div>
-      <p class="status" *ngIf="listening">Écoute en cours… parlez distinctement.</p>
       <p class="status" *ngIf="loading">Analyse de la question…</p>
       <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
 
@@ -121,48 +91,8 @@ export class AskPageComponent {
   response: NlpAnswer | null = null;
   loading = false;
   errorMessage = '';
-  listening = false;
-  readonly speechAvailable = typeof window !== 'undefined' &&
-    !!((window as SpeechWindow).SpeechRecognition || (window as SpeechWindow).webkitSpeechRecognition);
-  private recognition: SpeechRecognitionLike | null = null;
 
   constructor(private api: ApiService, private changeDetector: ChangeDetectorRef) {}
-
-  toggleVoiceInput(): void {
-    if (this.listening) {
-      this.recognition?.stop();
-      return;
-    }
-    const browserWindow = window as SpeechWindow;
-    const SpeechRecognition = browserWindow.SpeechRecognition || browserWindow.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      this.errorMessage = 'La reconnaissance vocale n’est pas disponible dans ce navigateur.';
-      return;
-    }
-
-    this.errorMessage = '';
-    this.recognition = new SpeechRecognition();
-    this.recognition.lang = 'fr-FR';
-    this.recognition.interimResults = false;
-    this.recognition.maxAlternatives = 1;
-    this.recognition.onresult = (event) => {
-      this.question = Array.from(event.results).map((result) => result[0].transcript).join(' ').trim();
-      this.changeDetector.markForCheck();
-    };
-    this.recognition.onerror = (event) => {
-      this.listening = false;
-      this.errorMessage = event.error === 'not-allowed'
-        ? 'Autorisez le microphone dans votre navigateur pour dicter une question.'
-        : `La reconnaissance vocale a échoué (${event.error}). Réessayez ou saisissez votre question.`;
-      this.changeDetector.markForCheck();
-    };
-    this.recognition.onend = () => {
-      this.listening = false;
-      this.changeDetector.markForCheck();
-    };
-    this.listening = true;
-    this.recognition.start();
-  }
 
   ask(): void {
     this.submitQuestion(false, this.question, true);

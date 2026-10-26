@@ -26,7 +26,6 @@ Le score de confiance présenté est un indicateur heuristique associé à la r�
 - Classement décroissant selon une métrique comprise.
 - Lecture d’une ressource par identifiant, création par classe et identifiant, modification des propriétés numériques autorisées, et suppression d’une ressource (y compris les liens entrants), avec prévisualisation et confirmation.
 - Réponse HTTP `422` explicite lorsque la question est vide ou hors du lexique/capacités, sans inventer de résultats.
-- Dictée vocale facultative au frontend via Web Speech API (fonctionnalité navigateur distincte du traitement NLP backend).
 
 Exemples vérifiés par tests :
 

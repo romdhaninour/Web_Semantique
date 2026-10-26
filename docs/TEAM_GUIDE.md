@@ -4,19 +4,20 @@ Remplacez les noms `Étudiant 1` à `Étudiant 5` par les noms réels du groupe 
 
 | Membre | Critères de la grille | Partie à présenter | Preuve à montrer |
 |---|---|---|---|
-| Étudiant 1 | Individuals · valeur ajoutée / reasoner | Ontologie RDF, individus, Explorer, raisonneur | Ouvrir un individu, présenter ses triplets, lancer le raisonneur et montrer les types inférés. |
-| Étudiant 2 | Requêtes SPARQL / CRUD | Console SPARQL, catalogue et API | Exécuter SELECT, FILTER/recherche, puis CREATE/UPDATE/DELETE et vérifier les résultats. |
-| Étudiant 3 | NLP/TALN /4 · saisie vocale | `nlp_service.py`, NLTK, page Questionner et API | Montrer tokens/racines, entités/métriques extraites, le SPARQL généré et exécuté; démontrer le CRUD en langage naturel avec aperçu et confirmation. Dicter si le navigateur le permet. |
-| Étudiant 4 | Interfaces graphiques /3 · carte | Accueil, Explorer, Graphe et Carte | Présenter le design, filtrer/rechercher dans les individus et visualiser les relations et les regroupements par ville. |
-| Étudiant 5 | Communication frontend/backend /3 · scénario /2 | Angular, FastAPI, Swagger et persistance RDF | Montrer les appels `/api`, tester `/docs` et expliquer le fichier Turtle de travail. |
+| Étudiant 1 | Individus (2 pts) · Valeur ajoutée (2 pts) | Ontologie RDF, propriétés, individu et raisonneur | Montrer une ObjectProperty, une DatatypeProperty, les triplets d’un équipement puis une classification produite par le raisonneur. |
+| Étudiant 2 | Requêtes SPARQL (4 pts) | Console SPARQL et CRUD | Exécuter SELECT, FILTER, recherche, CREATE, UPDATE et DELETE; vérifier chaque changement par une lecture. |
+| Étudiant 3 | API IA (4 pts) | API NLP, NLTK et traduction en SPARQL | Appeler `POST /api/nlp/ask`, montrer outils NLTK, analyse, requête générée et résultats; préciser qu’aucune API LLM tierce n’est appelée. |
+| Étudiant 4 | Interfaces graphiques (3 pts) | Accueil, Explorer, Graphe et Carte | Montrer un parcours interactif, la recherche/filtrage et les visualisations avec leur limite schématique. |
+| Étudiant 5 | Communication BE/FE (3 pts) · Scénario (2 pts) | Angular, FastAPI, Swagger et persistance RDF | Relier un appel `/api` à sa réponse et à l’écran; conclure le scénario utilisateur complet et expliquer la persistance. |
 
 ## Préparation
 
 - Lancer `Start Smart Grid.bat` et laisser l’accueil ouvert.
 - Aucune connexion n’est nécessaire. L’administration, les opérations CRUD/SPARQL et le raisonneur sont directement accessibles pour cette application pédagogique.
-- Pour le cycle SPARQL, utiliser `sg:Demo_Etudiant2` et supprimer l’individu temporaire après la présentation.
-- Pour le CRUD en langage naturel, utiliser une ressource de démonstration séparée comme `Demo_Eolienne`; vérifier l’aperçu et confirmer les mutations sur la page Questionner.
-- Pour la dictée, utiliser un navigateur compatible avec la Web Speech API et accepter l’accès au microphone; sinon saisir la question au clavier.
+- Pour le cycle SPARQL, choisir un identifiant inédit, le remplacer dans toutes les requêtes d’exemple et supprimer l’individu temporaire après la présentation.
+- Si vous présentez aussi le CRUD en langage naturel, utiliser un identifiant temporaire distinct; vérifier l’aperçu puis confirmer les mutations sur la page Questionner.
+
+Le déroulé détaillé, les paroles suggérées et les requêtes de démonstration sont dans [SCENARIO.md](./SCENARIO.md).
 
 ## Questions probables
 

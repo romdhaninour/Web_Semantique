@@ -18,7 +18,7 @@ Le tableau de bord résume le graphe : nombre d’individus, nombre de classes, 
 
 ### Questionner la grille
 
-La page de questions transforme la phrase en requête SPARQL, l’exécute sur le graphe RDF et affiche l’analyse linguistique, le SPARQL produit et les résultats. La dictée vocale est proposée dans les navigateurs compatibles avec la Web Speech API.
+La page de questions transforme le texte saisi en requête SPARQL, l’exécute sur le graphe RDF et affiche l’analyse linguistique, le SPARQL produit et les résultats.
 
 Le pipeline local s’appuie explicitement sur **NLTK**, sans API LLM ni modèle/corpus distant :
 
