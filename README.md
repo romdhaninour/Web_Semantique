@@ -6,6 +6,8 @@ L’application web représente le réseau électrique avec une ontologie RDF. E
 
 ## Documentation
 
+- [Explication du projet — français](docs/PROJECT_EXPLANATION_FR.md)
+- [Project explanation — English](docs/PROJECT_EXPLANATION_EN.md)
 - [Guide de l’application](docs/APP_GUIDE.md) — écrans, architecture et données.
 - [Répartition selon la grille](docs/TEAM_GUIDE.md) — rôles de présentation pour les cinq membres.
 - [Scénario de démonstration](docs/SCENARIO.md) — parcours détaillé en groupe.
