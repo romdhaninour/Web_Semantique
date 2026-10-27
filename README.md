@@ -9,6 +9,8 @@ L’application web représente le réseau électrique avec une ontologie RDF. E
 - [Explication du projet — français](docs/PROJECT_EXPLANATION_FR.md)
 - [Project explanation — English](docs/PROJECT_EXPLANATION_EN.md)
 - [Guide de l’application](docs/APP_GUIDE.md) — écrans, architecture et données.
+- [Guide de validation selon la grille](docs/VALIDATION_GUIDE.md) — vérifications, preuves et répartition entre les cinq membres.
+- [Exercices FastAPI et SPARQL](docs/API_AND_SPARQL_PRACTICE.md) — appels API, questions NLP et requêtes SPARQL progressives.
 - [Répartition selon la grille](docs/TEAM_GUIDE.md) — rôles de présentation pour les cinq membres.
 - [Scénario de démonstration](docs/SCENARIO.md) — parcours détaillé en groupe.
 - [Questions et scénarios de démonstration](docs/DEMO_SCENARIOS.md) — questions testées, parcours des écrans et CRUD NLP.

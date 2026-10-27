@@ -229,6 +229,8 @@ def _find_resource_id(question: str, action: str) -> str | None:
         direct_match = re.search(id_pattern, question)
         if direct_match:
             return direct_match.group(1)
+    if action == 'READ':
+        return None
     if action == 'CREATE':
         pattern = r'\b(?:nomm(?:e|ée?)|appel(?:e|ée?)|named|called|identifiant|id)\s+([A-Za-z][A-Za-z0-9_-]{1,63})\b'
     else:
@@ -351,6 +353,23 @@ def _make_ranking_query(classes: list[str], metric: str, location: str | None) -
     )
 
 
+def _make_average_query(classes: list[str], metric: str, location: str | None) -> str:
+    type_clause = (
+        '?resource a ?type . '
+        + 'VALUES ?type { ' + ' '.join(f'sg:{name}' for name in classes) + '} '
+    )
+    location_clause = (
+        f'FILTER(CONTAINS(LCASE(STR(?resource)), "{location.casefold()}")) '
+        if location else ''
+    )
+    return (
+        PREFIX
+        + f'SELECT ?type (AVG(?value) AS ?average) WHERE {{ {type_clause}'
+        + f'?resource sg:{metric} ?value . {location_clause}}} '
+        + 'GROUP BY ?type ORDER BY ?type'
+    )
+
+
 class NlpSparqlTranslator:
     def translate(self, question: str) -> Translation:
         normalized = _normalize(question).strip()
@@ -368,7 +387,18 @@ class NlpSparqlTranslator:
         action = _find_action(normalized)
         target = _find_resource_id(question, action)
 
-        if action == 'READ' and target is not None:
+        if action == 'READ' and any(term in tokens for term in ('average', 'avg', 'mean', 'moyenne')):
+            if not classes:
+                raise UnsupportedQuestion('Pour calculer une moyenne, précisez une classe, par exemple « éoliennes ».')
+            if metric is None:
+                if any(class_name in {'Batterie', 'StationPompage'} for class_name in classes):
+                    metric = 'capaciteStockage'
+                else:
+                    metric = 'capaciteProduction'
+            sparql = _make_average_query(classes, metric, location)
+            intent = 'AGGREGATE_AVERAGE'
+            confidence = 0.94
+        elif action == 'READ' and target is not None:
             sparql = _make_resource_read_query(target)
             intent = 'READ_RESOURCE'
             confidence = 0.95

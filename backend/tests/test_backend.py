@@ -207,6 +207,38 @@ def test_nlp_translates_location_search_and_safe_unsupported_question():
     assert 'Question non reconnue' in unsupported.json()['detail']
 
 
+def test_nlp_calculates_average_for_multiple_resource_classes():
+    response = client.post(
+        '/api/nlp/ask',
+        json={'question': 'What is the average capacity for wind turbines and solar panels?'},
+    )
+    assert response.status_code == 200
+    result = response.json()
+    assert result['intent'] == 'AGGREGATE_AVERAGE'
+    assert result['language'] == 'en'
+    assert result['entities'] == ['Eolienne', 'PanneauSolaire']
+    assert result['metric'] == 'capaciteProduction'
+    assert 'AVG(?value)' in result['sparql']
+    assert 'GROUP BY ?type' in result['sparql']
+    assert result['count'] == 2
+    assert {row['type'].split('#')[-1] for row in result['rows']} == {'Eolienne', 'PanneauSolaire'}
+    assert all(row['average'] > 0 for row in result['rows'])
+
+
+def test_nlp_calculates_average_in_french():
+    response = client.post(
+        '/api/nlp/ask',
+        json={'question': 'Quelle est la production moyenne des éoliennes et des panneaux solaires ?'},
+    )
+    assert response.status_code == 200
+    result = response.json()
+    assert result['intent'] == 'AGGREGATE_AVERAGE'
+    assert result['language'] == 'fr'
+    assert result['entities'] == ['Eolienne', 'PanneauSolaire']
+    assert result['metric'] == 'capaciteProduction'
+    assert result['count'] == 2
+
+
 def test_nlp_accepts_symbolic_numeric_comparators():
     response = client.post(
         '/api/nlp/ask',
