@@ -370,6 +370,22 @@ def _make_average_query(classes: list[str], metric: str, location: str | None) -
     )
 
 
+def _make_line_manager_voltage_query(comparator: str, value: float) -> str:
+    operator = {'gt': '>', 'gte': '>=', 'lt': '<', 'lte': '<=', 'eq': '='}[comparator]
+    return (
+        PREFIX
+        + 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n'
+        + 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n'
+        + 'SELECT DISTINCT ?line ?manager ?voltage WHERE {\n'
+        + '  ?line rdf:type/rdfs:subClassOf* sg:LigneTransport .\n'
+        + '  OPTIONAL { ?line sg:gerePar ?manager . }\n'
+        + '  OPTIONAL { ?line sg:tensionLigne ?voltage . }\n'
+        + f'  FILTER(BOUND(?manager) || (?voltage {operator} {_sparql_number(value)}))\n'
+        + '}\n'
+        + 'ORDER BY ?line'
+    )
+
+
 class NlpSparqlTranslator:
     def translate(self, question: str) -> Translation:
         normalized = _normalize(question).strip()
@@ -433,6 +449,18 @@ class NlpSparqlTranslator:
                 raise UnsupportedQuestion('Précisez l’identifiant exact de la ressource à supprimer, par exemple « Eolienne_Demo ».')
             sparql = _make_delete_update(target)
             intent = 'DELETE'
+            confidence = 0.95
+        elif (
+            'LigneTransport' in classes
+            and any(term in tokens for term in ('manager', 'managers', 'managed', 'gestionnaire', 'gestionnaires'))
+            and any(term in tokens for term in ('voltage', 'tension'))
+            and value is not None
+            and comparator is not None
+            and any(term in tokens for term in ('or', 'ou'))
+        ):
+            sparql = _make_line_manager_voltage_query(comparator, value)
+            intent = 'OPTIONAL_JOIN_FILTER'
+            metric = 'tensionLigne'
             confidence = 0.95
         elif value is not None and comparator is not None:
             selected_metric = metric or ('capaciteStockage' if 'Batterie' in classes else 'capaciteProduction')

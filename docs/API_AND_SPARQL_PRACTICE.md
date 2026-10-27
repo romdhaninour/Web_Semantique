@@ -91,8 +91,10 @@ The following are examples aligned with the translator's current vocabulary and 
 20. `Quelle est la production moyenne des éoliennes et des panneaux solaires ?`
 21. `What is the average capacity for wind turbines and solar panels?`
 22. `What is the average storage capacity for batteries?`
+23. `List lines that have a manager or a voltage greater than 30, and show whichever values exist.`
+24. `Liste les lignes qui ont un gestionnaire ou une tension supérieure à 30 et affiche les valeurs disponibles.`
 
-These questions generate an `AVG` query grouped by the requested class, so the results show a separate average for each class. The translator is rule- and lexicon-based, not a general conversational AI. If a wording is outside its supported vocabulary, it may return HTTP `422`. Try a simpler supported wording rather than presenting an unsupported question as a successful feature.
+The average questions generate an `AVG` query grouped by the requested class, so the results show a separate average for each class. The line question generates a subclass-aware query with two `OPTIONAL` patterns and a `BOUND`/voltage `FILTER`. The translator is rule- and lexicon-based, not a general conversational AI. If a wording is outside its supported vocabulary, it may return HTTP `422`. Try a simpler supported wording rather than presenting an unsupported question as a successful feature.
 
 ### NLP CRUD: optional, use a temporary resource only
 
@@ -133,6 +135,69 @@ Delete it only if it was created for this test:
   "confirm": false
 }
 ```
+
+### More CRUD question examples
+
+Use the same identifier throughout one lifecycle, and make sure it does not already exist. For CREATE, UPDATE, and DELETE, first send the request with `"confirm": false`; inspect the preview, then repeat with `"confirm": true` to execute it. READ does not need confirmation.
+
+#### English battery lifecycle
+
+Create:
+
+```json
+{
+  "question": "Create a battery named Demo_Battery_2026 with storage capacity 250 kWh",
+  "confirm": false
+}
+```
+
+After checking the preview, repeat with `"confirm": true`. Then read the resource:
+
+```json
+{
+  "question": "Read resource Demo_Battery_2026",
+  "confirm": false
+}
+```
+
+Update its storage capacity:
+
+```json
+{
+  "question": "Update storage capacity of Demo_Battery_2026 to 300 kWh",
+  "confirm": false
+}
+```
+
+Inspect the preview and confirm the update, then read the resource again to verify the new value:
+
+```json
+{
+  "question": "Read resource Demo_Battery_2026",
+  "confirm": false
+}
+```
+
+Delete the temporary resource only after confirming its identifier:
+
+```json
+{
+  "question": "Delete resource Demo_Battery_2026",
+  "confirm": false
+}
+```
+
+Inspect the preview and repeat with `"confirm": true`. A final read should report that the resource cannot be found.
+
+#### English solar-panel lifecycle
+
+1. Create: `Create a solar panel named Demo_Panel_2026 with production capacity 350 kW`
+2. Read: `Read resource Demo_Panel_2026`
+3. Update: `Update production capacity of Demo_Panel_2026 to 400 kW`
+4. Read it again to verify the updated capacity.
+5. Delete: `Delete resource Demo_Panel_2026`
+
+For steps 1, 3, and 5, preview with `"confirm": false`, check the generated SPARQL, then repeat with `"confirm": true`. Use `"confirm": false` for reads.
 
 The translator previews writes before confirmation. Deletion removes the resource's outgoing and incoming triples. Verify the result afterward, and remember that confirmed changes persist in `backend/data/working_graph.ttl`.
 

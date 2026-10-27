@@ -26,6 +26,7 @@ import { ApiService, NlpAnswer } from '../../services/api.service';
           <button type="button" class="example-chip" (click)="question = 'Liste les bâtiments industriels'">Bâtiments industriels</button>
           <button type="button" class="example-chip" (click)="question = 'Quelles éoliennes à Sfax ?'">Éoliennes à Sfax</button>
           <button type="button" class="example-chip" (click)="question = 'What is the average capacity for wind turbines and solar panels?'">Average capacity by source type</button>
+          <button type="button" class="example-chip" (click)="question = 'List lines that have a manager or a voltage greater than 30, and show whichever values exist.'">Optional join · line managers and voltage</button>
           <button type="button" class="example-chip mutation-chip" (click)="question = 'Crée une éolienne nommée Demo_Eolienne avec une capacité de production de 650 kW'">CRUD · Créer</button>
           <button type="button" class="example-chip mutation-chip" (click)="question = 'Modifie la capacité de production de Demo_Eolienne à 720 kW'">CRUD · Modifier</button>
           <button type="button" class="example-chip mutation-chip" (click)="question = 'Supprime la ressource Demo_Eolienne'">CRUD · Supprimer</button>

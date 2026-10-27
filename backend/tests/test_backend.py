@@ -239,6 +239,48 @@ def test_nlp_calculates_average_in_french():
     assert result['count'] == 2
 
 
+def test_nlp_builds_optional_join_for_managed_lines_or_voltage_threshold():
+    response = client.post(
+        '/api/nlp/ask',
+        json={
+            'question': (
+                'List lines that have a manager or a voltage greater than 30, '
+                'and show whichever values exist.'
+            )
+        },
+    )
+    assert response.status_code == 200
+    result = response.json()
+    assert result['intent'] == 'OPTIONAL_JOIN_FILTER'
+    assert result['entities'] == ['LigneTransport']
+    assert result['metric'] == 'tensionLigne'
+    assert 'OPTIONAL { ?line sg:gerePar ?manager . }' in result['sparql']
+    assert 'OPTIONAL { ?line sg:tensionLigne ?voltage . }' in result['sparql']
+    assert 'FILTER(BOUND(?manager) || (?voltage > 30))' in result['sparql']
+    assert 'rdf:type/rdfs:subClassOf* sg:LigneTransport' in result['sparql']
+    assert result['count'] > 0
+    assert all({'line', 'manager', 'voltage'} <= row.keys() for row in result['rows'])
+
+
+def test_nlp_builds_optional_join_for_french_line_question():
+    response = client.post(
+        '/api/nlp/ask',
+        json={
+            'question': (
+                'Liste les lignes qui ont un gestionnaire ou une tension supérieure à 30 '
+                'et affiche les valeurs disponibles.'
+            )
+        },
+    )
+    assert response.status_code == 200
+    result = response.json()
+    assert result['intent'] == 'OPTIONAL_JOIN_FILTER'
+    assert result['language'] == 'fr'
+    assert result['metric'] == 'tensionLigne'
+    assert result['count'] > 0
+    assert 'FILTER(BOUND(?manager) || (?voltage > 30))' in result['sparql']
+
+
 def test_nlp_accepts_symbolic_numeric_comparators():
     response = client.post(
         '/api/nlp/ask',
